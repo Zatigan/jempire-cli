@@ -23,7 +23,7 @@ public class Game {
   return result;
  }
 
- public static void game() {
+ public static void main(String[] args) {
   int wood = 0;
   int stone = 0;
   int gold = 50;
@@ -33,7 +33,17 @@ public class Game {
   boolean castle = false;
   int days = 1;
   boolean peopleFed = true;
-  
- }
 
+ do {
+  System.out.println("Journée " + days);
+  System.out.println("Une nouvelle journée commence. Voici les ressources à votre disposition.");
+  System.out.println();
+
+
+ 
+ } while (peopleFed);
+
+
+ }
+ 
 }
