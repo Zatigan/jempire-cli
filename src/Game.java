@@ -91,6 +91,7 @@ public class Game {
       if (food > villagers) {
       System.out.println();
       System.out.println("Les habitants prennent un repas bien mérité ! Vous avez perdu " + villagers + " de nourriture.");
+      food -= villagers;
       } else {
         break;
       }
