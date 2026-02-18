@@ -1,3 +1,6 @@
+# RoadMap
+## Contrainte technique 
+
 - Boucle principale
 
 - Gestion des ressources
@@ -21,9 +24,10 @@
 
 - Code simple, propre et découpé
 
-***************************************************************************
 
-============= ETAT INITIAL =============
+
+## Etat Initial
+
 - Bois = 0			static int
 - Pierre = 0			static int
 - Or = 50			static int
@@ -34,12 +38,14 @@
 - Tours de jeu = 0 		static int
 - Tout le monde a mangé		static bool
 
-============= CONDITIONS (while !château ou habitant = 0) =============
+## Conditions
+ (while !château ou habitant = 0) 
+
 Victoire = création d'un château (donc boucle principale autour de cette condition)
 
 Défaite = si tout les habitants n'ont pas à manger, YOU LOSE ! (dans le futur, si le nombre d'habitants est égal à 0)
 
-============= TOUR DE JEU (boucle do) =============
+## Tour de jeu (boucle do)
 Déroulé d'un tour de boucle : 
 
 - Message : "Une nouvelle journée commence, voici les ressources à votre disposition :"
@@ -52,7 +58,9 @@ Déroulé d'un tour de boucle :
 
 ATTENTION : Les coûts et les gains sont à multiplier par le nombre d'habitants SAUF pour le château !
 
-	1 - Explorer la forêt (static void)
+## Menu in-game
+
+ 1.  Explorer la forêt (static void)
 		Coût : 0
 		Gains :
 			Bois +5
@@ -60,7 +68,7 @@ ATTENTION : Les coûts et les gains sont à multiplier par le nombre d'habitants
 		Affichage d'un message d'information ("Vous gagnez X ressources")
 		Modification des variables associées à l'action (gain / perte)
 
-	2 - Créer une mine (static void)
+2. Créer une mine (static void)
 		Condition : Si mine = true OU bois < 10 => construction impossible
 			    Si mine = false ET bois >= 10 => construction
 		Coût (fixe car bâtiment) : - 10 bois
@@ -68,7 +76,7 @@ ATTENTION : Les coûts et les gains sont à multiplier par le nombre d'habitants
 		Affichage d'un message d'information ("Vous construisez une mine")
 		Modification des variables associées à l'action (gain / perte)
 	
-	3 - Travailler à la mine (static void)
+3. Travailler à la mine (static void)
 		Condition : la mine doit être déjà construite sinon impossible
 		Coût : -5 nourriture
 		Gains :
@@ -77,19 +85,19 @@ ATTENTION : Les coûts et les gains sont à multiplier par le nombre d'habitants
 		Affichage d'un message d'information (""Vous gagnez X ressources")
 		Modification des variables associées à l'action (gain / perte)
 
-	4 - Recruter un soldat (static void)
+4. Recruter un soldat (static void)
 		Coût : Or -30
 		Gain : Habitant +1
 		Affichage d'un message d'information ("Vous gagnez X ressources")
 		Modification des variables associées à l'action (gain / perte)
 
-	5 - Commercer (static void)
+5. Commercer (static void)
 		Coût : Pierre -5
 		Gain : Or +10
 		Affichage d'un message d'information ("Vous gagnez X ressources")
 		Modification des variables associées à l'action (gain / perte)
 
-	6 - CONSTRUIRE LE CHÂTEAU (static void)
+6. CONSTRUIRE LE CHÂTEAU (static void)
 		Coût : 
 			Bois -100
 			Pierre -100
@@ -97,6 +105,7 @@ ATTENTION : Les coûts et les gains sont à multiplier par le nombre d'habitants
 			Habitants >= 40
 		Affichage d'un message d'information ("Vous construisez un château")
 		Modification des variables associées à l'action (gain / perte)
+### Condition Du Menu
 
 Une fois sorti du menu : 
 	"Les habitants prennent un repas bien mérité ! Vous perdez X nourriture."
@@ -107,22 +116,25 @@ Nouveau message :
 	"Fin de la journée Y, tout le monde file se coucher !"
 	Y = correspond au nombre de tour de boucle réalisé
 
-============= FIN DU TOUR =============
+## Fin De Tour
+
+- Les villageaois mange 1 de nourriture chacun 
+- Passage au jour suivant (tour de boucle)
 
 
 
-============= AMELIORATIONS FUTURES =============
+## Ameliorations Futures
 - Implémenter des champs qui contre x bois (?) donne une génération passive limitée de nourriture tous les jours.
 
 - Implémenter Construire des maisons, qui demande X bois. Chaque 2 maisons, fait +1 habitant / tour.
 
 - Créer variable de soldats à incrémenter lors du recrutement. Finalité = besoin de 40 soldats pour construire le château, et pas 40 habitants.
 
-- Si tous les habitants n'ont pas de nourriture, soustraire uniquement le nombre d'habitants n'ayant pas à manger du total d'habitants.
-
 - Chaque habitant peut réaliser une action différente.
 
 - Création d'une class pour les ressources puis créer un fichier à part appelé dans game ?
+  
+- Si tous les habitants n'ont pas de nourriture, soustraire uniquement le nombre d'habitants n'ayant pas à manger du total d'habitants. => OK
 
 - Empêcher le travail à la mine tant que la mine n'est pas construite (donc vérification à faire sur la variable mine). => OK
 
