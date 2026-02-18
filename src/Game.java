@@ -37,6 +37,7 @@ public class Game {
     boolean castle = false;
     int days = 1;
     boolean peopleFed = true;
+    boolean gameEnding = !peopleFed || castle == true;
 
     Scanner scanner = new Scanner(System.in);
 
@@ -82,6 +83,7 @@ public class Game {
           break;
         case 6:
           // appel method château
+          // prévoir break dans la method pour sortir de la boucle dès la construction du château
           break;
         default:
           System.out.print("Entrez un numéro valide s'il vous plaît.");
@@ -103,7 +105,17 @@ public class Game {
       days++;
       castle = true;
 
-    } while (!castle);
+    } while (!gameEnding);
+
+    if(!peopleFed) {
+      System.out.println();
+      System.out.println("Vous avez perdu ! Il ne vous restait pas assez de nourriture, les villageois sont morts de faim !");
+      System.out.println();
+    } else if(castle) {
+      System.out.println();
+      System.out.println("Vous avez gagné la partie !");
+      System.out.println();
+    };
 
   }
 
