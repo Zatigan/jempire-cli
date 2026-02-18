@@ -2,6 +2,17 @@ import java.util.Scanner;
 
 public class Game {
 
+  static int wood = 0;
+  static int stone = 0;
+  static int gold = 50;
+  static int food = 100;
+  static int villagers = 1;
+  static boolean mine = false;
+  static boolean castle = false;
+  static int days = 1;
+  static boolean peopleFed = true;
+  static boolean gameEnding = !peopleFed || castle == true;
+
   public static int readInt(Scanner scanner) {
     return readInt(scanner, "Entrez un nombre :");
   }
@@ -28,16 +39,6 @@ public class Game {
   }
 
   public static void main(String[] args) {
-    int wood = 0;
-    int stone = 0;
-    int gold = 50;
-    int food = 100;
-    int villagers = 1;
-    boolean mine = false;
-    boolean castle = false;
-    int days = 1;
-    boolean peopleFed = true;
-    boolean gameEnding = !peopleFed || castle == true;
 
     Scanner scanner = new Scanner(System.in);
 
@@ -63,11 +64,12 @@ public class Game {
 
       int choice = readInt(scanner, "Quel est votre choix pour cette journée : ");
 
-      //* Prévoir boucle do / while pour rester dans le menu tant qu'un nombre valide n'est pas saisi */
+      // * Prévoir boucle do / while pour rester dans le menu tant qu'un nombre valide
+      // n'est pas saisi */
 
       switch (choice) {
         case 1:
-          // appel method forêt
+          forest();
           break;
         case 2:
           // appel method construction mine
@@ -83,7 +85,8 @@ public class Game {
           break;
         case 6:
           // appel method château
-          // prévoir break dans la method pour sortir de la boucle dès la construction du château
+          // prévoir break dans la method pour sortir de la boucle dès la construction du
+          // château
           break;
         default:
           System.out.print("Entrez un numéro valide s'il vous plaît.");
@@ -91,9 +94,10 @@ public class Game {
       }
 
       if (food > villagers) {
-      System.out.println();
-      System.out.println("Les habitants prennent un repas bien mérité ! Vous avez perdu " + villagers + " de nourriture.");
-      food -= villagers;
+        System.out.println();
+        System.out
+            .println("Les habitants prennent un repas bien mérité ! Vous avez perdu " + villagers + " de nourriture.");
+        food -= villagers;
       } else {
         peopleFed = false;
         break;
@@ -103,20 +107,31 @@ public class Game {
       System.out.println();
 
       days++;
-      castle = true;
+
+      System.out.print("Appuyez sur la touche entrée pour passer au jour "+ days);
+      scanner.nextLine();
 
     } while (!gameEnding);
 
-    if(!peopleFed) {
+    if (!peopleFed) {
       System.out.println();
-      System.out.println("Vous avez perdu ! Il ne vous restait pas assez de nourriture, les villageois sont morts de faim !");
+      System.out
+          .println("Vous avez perdu ! Il ne vous restait pas assez de nourriture, les villageois sont morts de faim !");
+
       System.out.println();
-    } else if(castle) {
+    } else if (castle) {
       System.out.println();
       System.out.println("Vous avez gagné la partie !");
       System.out.println();
-    };
+    }
+    ;
+  }
 
+  public static void forest() {
+    wood += 5;
+    food += 3;
+    System.out.println();
+    System.out.println("Vous gagnez +5 bois et +3 nourriture !");
   }
 
 }
