@@ -4,7 +4,7 @@ public class Game {
 
   static int wood = 0;
   static int stone = 0;
-  static int gold = 250;
+  static int gold = 50;
   static int food = 100;
   static int villagers = 41;
   static boolean mine = false;
