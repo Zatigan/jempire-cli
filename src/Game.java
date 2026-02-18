@@ -10,6 +10,7 @@ public class Game {
   static boolean mine = false;
   static boolean castle = false;
   static int days = 1;
+  static boolean actionPossible = false;
   static boolean peopleFed = true;
   static boolean gameEnding = castle == true || !peopleFed;
 
@@ -62,35 +63,33 @@ public class Game {
       System.out.println("\t6 - Construire LE château");
       System.out.println();
 
-      int choice = readInt(scanner, "Quel est votre choix pour cette journée : ");
-
-      // * Prévoir boucle do / while pour rester dans le menu tant qu'un nombre valide
-      // n'est pas saisi (prendre en compte le cas ou la construction de la mine n'est
-      // pas possible) */
-
-      switch (choice) {
-        case 1:
-          forest();
-          break;
-        case 2:
-          shaft();
-          break;
-        case 3:
-          workAtShaft();
-          break;
-        case 4:
-          recruiting();
-          break;
-        case 5:
-          trade();
-          break;
-        case 6:
-          castle();
-          break;
-        default:
-          System.out.print("Entrez un numéro valide s'il vous plaît.");
-          break;
-      }
+      do {
+        actionPossible = false;
+        int choice = readInt(scanner, "Quel est votre choix pour cette journée : ");
+        switch (choice) {
+          case 1:
+            forest();
+            break;
+          case 2:
+            shaft();
+            break;
+          case 3:
+            workAtShaft();
+            break;
+          case 4:
+            recruiting();
+            break;
+          case 5:
+            trade();
+            break;
+          case 6:
+            castle();
+            break;
+          default:
+            System.out.println("Entrez un numéro valide s'il vous plaît.");
+            break;
+        }
+      } while (!actionPossible);
 
       if (!gameEnding) {
         if (food > villagers) {
@@ -132,6 +131,7 @@ public class Game {
   public static void forest() {
     wood += 5;
     food += 3;
+    actionPossible = true;
     System.out.println();
     System.out.println("Vous gagnez +5 bois et +3 nourriture !");
   }
@@ -140,9 +140,11 @@ public class Game {
     if (mine == false && wood >= 10) {
       wood -= 10;
       mine = true;
+      actionPossible = true;
       System.out.println("Vous utilisez 10 bois et vous construisez la mine");
     } else {
       System.out.println("Construction impossible");
+      System.out.println();
     }
   }
 
@@ -151,9 +153,11 @@ public class Game {
       food -= 5;
       stone += 5;
       gold += 2;
-      System.out.println("Vous avez utilisez 5 de nourriture et vous gagnez 5 de pierre et 2 d'or.");
+      actionPossible = true;
+      System.out.println("Vous avez utilisé 5 de nourriture et vous gagnez +5 pierre et +2 or.");
     } else {
       System.out.println("Vous ne pouvez pas travailler a la mine, elle n'est pas construite !");
+      System.out.println();
     }
   }
 
@@ -161,18 +165,22 @@ public class Game {
     if (gold >= 30) {
       gold -= 30;
       villagers += 1;
-      System.out.println("Vous gagnez 1 habitant.");
+      actionPossible = true;
+      System.out.println("Vous gagnez +1 habitant.");
     } else {
       System.out.println("Vous n'avez pas assez d'argent pour recruter un habitant.");
+      System.out.println();
     }
   }
 
   public static void trade() {
     if (stone < 5) {
       System.out.println("Vous devez avoir 5 pierre pour commercer !");
+      System.out.println();
     } else {
       gold += 10;
       stone -= 5;
+      actionPossible = true;
       System.out.println("Vous gagnez +10 or !");
     }
   }
@@ -184,9 +192,11 @@ public class Game {
       gold -= 200;
       castle = true;
       gameEnding = true;
+      actionPossible = true;
       System.out.println("Vous avez construit LE château !");
     } else {
       System.out.println("Vous n'avez pas les ressources nécessaires pour construire ce bâtiment !");
+      System.out.println();
     }
   }
 }

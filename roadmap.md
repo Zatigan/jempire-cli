@@ -112,13 +112,18 @@ Nouveau message :
 
 
 ============= AMELIORATIONS FUTURES =============
+- Implémenter des champs qui contre x bois (?) donne une génération passive limitée de nourriture tous les jours.
 
-- Création d'une class pour les ressources puis créer un fichier à part appelé dans game ?
+- Implémenter Construire des maisons, qui demande X bois. Chaque 2 maisons, fait +1 habitant / tour.
 
-- Empêcher le travail à la mine tant que la mine n'est pas construite (donc vérification  à faire sur la variable mine).
+- Créer variable de soldats à incrémenter lors du recrutement. Finalité = besoin de 40 soldats pour construire le château, et pas 40 habitants.
 
 - Si tous les habitants n'ont pas de nourriture, soustraire uniquement le nombre d'habitants n'ayant pas à manger du total d'habitants.
 
-- Afficher un message d'erreur pour construire le château tant que TOUTES les conditions ne sont pas respectées
-
 - Chaque habitant peut réaliser une action différente.
+
+- Création d'une class pour les ressources puis créer un fichier à part appelé dans game ?
+
+- Empêcher le travail à la mine tant que la mine n'est pas construite (donc vérification à faire sur la variable mine). => OK
+
+- Afficher un message d'erreur pour construire le château tant que TOUTES les conditions ne sont pas respectées => OK
