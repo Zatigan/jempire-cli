@@ -57,7 +57,7 @@ public class Game {
       System.out.println("\t1 - Explorer la forêt");
       System.out.println("\t2 - Créer une mine");
       System.out.println("\t3 - Travailler à la mine");
-      System.out.println("\t4 - Créer un soldat");
+      System.out.println("\t4 - Recruter un soldat");
       System.out.println("\t5 - Commercer");
       System.out.println("\t6 - Construire LE château");
       System.out.println();
@@ -65,7 +65,8 @@ public class Game {
       int choice = readInt(scanner, "Quel est votre choix pour cette journée : ");
 
       // * Prévoir boucle do / while pour rester dans le menu tant qu'un nombre valide
-      // n'est pas saisi (prendre en compte le cas ou la construction de la mine n'est pas possible) */
+      // n'est pas saisi (prendre en compte le cas ou la construction de la mine n'est
+      // pas possible) */
 
       switch (choice) {
         case 1:
@@ -78,7 +79,7 @@ public class Game {
           workAtShaft();
           break;
         case 4:
-          // appel method soldat
+          recruiting();
           break;
         case 5:
           // appel method commerce
@@ -136,22 +137,32 @@ public class Game {
 
   public static void shaft() {
     if (mine == false && wood >= 10) {
-    wood -= 10;
-    mine = true;
-    System.out.println("Vous utilisez 10 bois et vous construisez la mine");
-    }else{
+      wood -= 10;
+      mine = true;
+      System.out.println("Vous utilisez 10 bois et vous construisez la mine");
+    } else {
       System.out.println("Construction impossible");
     }
   }
-  
-  public static void workAtShaft(){
-    if (mine == true){
+
+  public static void workAtShaft() {
+    if (mine == true) {
       food -= 5;
       stone += 5;
       gold += 2;
       System.out.println("Vous avez utilisez 5 de nourriture et vous gagnez 5 de pierre et 2 d'or.");
-    }else{
+    } else {
       System.out.println("Vous ne pouvez pas travailler a la mine, elle n'est pas construite !");
+    }
+  }
+
+  public static void recruiting() {
+    if (gold >= 30) {
+      gold -= 30;
+      villagers += 1;
+      System.out.println("Vous gagnez 1 habitant.");
+    } else {
+      System.out.println("Vous n'avez pas assez d'argent pour recruter un habitant.");
     }
   }
 }
