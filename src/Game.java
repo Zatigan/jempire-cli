@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Game {
 
   static int wood = 0;
-  static int stone = 50;
+  static int stone = 0;
   static int gold = 50;
   static int food = 100;
   static int villagers = 1;
