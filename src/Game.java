@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Game {
 
-  static int wood = 0;
+  static int wood = 10;
   static int stone = 0;
   static int gold = 50;
   static int food = 100;
@@ -65,14 +65,14 @@ public class Game {
       int choice = readInt(scanner, "Quel est votre choix pour cette journée : ");
 
       // * Prévoir boucle do / while pour rester dans le menu tant qu'un nombre valide
-      // n'est pas saisi */
+      // n'est pas saisi (prendre en compte le cas ou la construction de la mine n'est pas possible) */
 
       switch (choice) {
         case 1:
           forest();
           break;
         case 2:
-          // appel method construction mine
+          shaft();
           break;
         case 3:
           // appel method mine
@@ -108,7 +108,7 @@ public class Game {
 
       days++;
 
-      System.out.print("Appuyez sur la touche entrée pour passer au jour "+ days);
+      System.out.print("Appuyez sur la touche entrée pour passer au jour " + days);
       scanner.nextLine();
 
     } while (!gameEnding);
@@ -134,4 +134,13 @@ public class Game {
     System.out.println("Vous gagnez +5 bois et +3 nourriture !");
   }
 
+  public static void shaft() {
+    if (mine == false && wood >= 10) {
+    wood -= 10;
+    mine = true;
+    System.out.println("Vous utilisez 10 bois et vous construisez la mine");
+    }else{
+      System.out.println("Construction impossible");
+    }
+  }
 }
