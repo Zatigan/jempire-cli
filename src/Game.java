@@ -86,7 +86,6 @@ public class Game {
           break;
         case 6:
           castle();
-          // château
           break;
         default:
           System.out.print("Entrez un numéro valide s'il vous plaît.");
