@@ -6,7 +6,7 @@ public class Game {
   static int stone = 0;
   static int gold = 50;
   static int food = 100;
-  static int villagers = 41;
+  static int villagers = 1;
   static boolean mine = false;
   static boolean castle = false;
   static int days = 1;
