@@ -2,16 +2,16 @@ import java.util.Scanner;
 
 public class Game {
 
-  static int wood = 0;
-  static int stone = 0;
-  static int gold = 50;
+  static int wood = 100;
+  static int stone = 100;
+  static int gold = 250;
   static int food = 100;
-  static int villagers = 1;
+  static int villagers = 41;
   static boolean mine = false;
   static boolean castle = false;
   static int days = 1;
   static boolean peopleFed = true;
-  static boolean gameEnding = !peopleFed || castle == true;
+  static boolean gameEnding = castle == true || !peopleFed;
 
   public static int readInt(Scanner scanner) {
     return readInt(scanner, "Entrez un nombre :");
@@ -85,7 +85,7 @@ public class Game {
           trade();
           break;
         case 6:
-          // appel method château
+          castle();
           // prévoir break dans la method pour sortir de la boucle dès la construction du
           // château
           break;
@@ -94,23 +94,26 @@ public class Game {
           break;
       }
 
-      if (food > villagers) {
+      if (!gameEnding) {
+        if (food > villagers) {
+          System.out.println();
+          System.out
+              .println(
+                  "Les habitants prennent un repas bien mérité ! Vous avez perdu " + villagers + " de nourriture.");
+          food -= villagers;
+        } else {
+          peopleFed = false;
+          break;
+        }
         System.out.println();
-        System.out
-            .println("Les habitants prennent un repas bien mérité ! Vous avez perdu " + villagers + " de nourriture.");
-        food -= villagers;
-      } else {
-        peopleFed = false;
-        break;
+        System.out.println("Fin de la journée " + days + ", tout le monde file se coucher !");
+        System.out.println();
+
+        days++;
+
+        System.out.print("Appuyez sur la touche entrée pour passer au jour " + days);
+        scanner.nextLine();
       }
-      System.out.println();
-      System.out.println("Fin de la journée " + days + ", tout le monde file se coucher !");
-      System.out.println();
-
-      days++;
-
-      System.out.print("Appuyez sur la touche entrée pour passer au jour " + days);
-      scanner.nextLine();
 
     } while (!gameEnding);
 
@@ -166,13 +169,26 @@ public class Game {
     }
   }
 
-    public static void trade() {
-      if (stone < 5) {
-        System.out.println("Vous devez avoir 5 pierre pour commercer !");
-      } else {
-        gold += 10;
-        stone -= 5;
-        System.out.println("Vous gagnez +10 or !");
-      }
+  public static void trade() {
+    if (stone < 5) {
+      System.out.println("Vous devez avoir 5 pierre pour commercer !");
+    } else {
+      gold += 10;
+      stone -= 5;
+      System.out.println("Vous gagnez +10 or !");
     }
   }
+
+  public static void castle() {
+    if (wood >= 100 && stone >= 100 && gold >= 200 && villagers >= 40) {
+      wood -= 100;
+      stone -= 100;
+      gold -= 200;
+      castle = true;
+      gameEnding = true;
+      System.out.println("Vous avez construit LE château !");
+    } else {
+      System.out.println("Vous n'avez pas les ressources nécessaires pour construire ce bâtiment !");
+    }
+  }
+}
