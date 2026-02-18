@@ -7,7 +7,7 @@ public class Game {
   static int gold = 50;
   static int food = 100;
   static int villagers = 1;
-  static boolean mine = true;
+  static boolean mine = false;
   static boolean castle = false;
   static int days = 1;
   static boolean peopleFed = true;
