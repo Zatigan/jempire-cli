@@ -93,6 +93,7 @@ public class Game {
       System.out.println("Les habitants prennent un repas bien mérité ! Vous avez perdu " + villagers + " de nourriture.");
       food -= villagers;
       } else {
+        peopleFed = false;
         break;
       }
       System.out.println();
