@@ -82,7 +82,7 @@ public class Game {
           recruiting();
           break;
         case 5:
-          // appel method commerce
+          trade();
           break;
         case 6:
           // appel method château
@@ -165,4 +165,14 @@ public class Game {
       System.out.println("Vous n'avez pas assez d'argent pour recruter un habitant.");
     }
   }
-}
+
+    public static void trade() {
+      if (stone < 5) {
+        System.out.println("Vous devez avoir 5 pierre pour commercer !");
+      } else {
+        gold += 10;
+        stone -= 5;
+        System.out.println("Vous gagnez +10 or !");
+      }
+    }
+  }
