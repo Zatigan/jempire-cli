@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Game {
 
   static int wood = 0;
-  static int stone = 0;
+  static int stone = 50;
   static int gold = 50;
   static int food = 100;
   static int villagers = 1;
@@ -82,7 +82,7 @@ public class Game {
           recruiting();
           break;
         case 5:
-          // appel method commerce
+          trade();
           break;
         case 6:
           // appel method château
@@ -165,4 +165,14 @@ public class Game {
       System.out.println("Vous n'avez pas assez d'argent pour recruter un habitant.");
     }
   }
-}
+
+    public static void trade() {
+      if (stone < 5) {
+        System.out.println("Vous devez avoir 5 pierre pour commercer !");
+      } else {
+        gold += 10;
+        stone -= 5;
+        System.out.println("Vous gagnez +10 or !");
+      }
+    }
+  }
