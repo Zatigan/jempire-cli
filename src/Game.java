@@ -154,7 +154,7 @@ public class Game {
       stone += 5;
       gold += 2;
       actionPossible = true;
-      System.out.println("Vous avez utilisé 5 de nourriture et vous gagnez 5 de pierre et 2 d'or.");
+      System.out.println("Vous avez utilisé 5 de nourriture et vous gagnez +5 pierre et +2 or.");
     } else {
       System.out.println("Vous ne pouvez pas travailler a la mine, elle n'est pas construite !");
       System.out.println();
