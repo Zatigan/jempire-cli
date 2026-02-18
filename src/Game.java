@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Game {
 
-  static int wood = 10;
+  static int wood = 0;
   static int stone = 0;
   static int gold = 50;
   static int food = 100;
@@ -75,7 +75,7 @@ public class Game {
           shaft();
           break;
         case 3:
-          // appel method mine
+          workAtShaft();
           break;
         case 4:
           // appel method soldat
@@ -141,6 +141,17 @@ public class Game {
     System.out.println("Vous utilisez 10 bois et vous construisez la mine");
     }else{
       System.out.println("Construction impossible");
+    }
+  }
+  
+  public static void workAtShaft(){
+    if (mine == true){
+      food -= 5;
+      stone += 5;
+      gold += 2;
+      System.out.println("Vous avez utilisez 5 de nourriture et vous gagnez 5 de pierre et 2 d'or.");
+    }else{
+      System.out.println("Vous ne pouvez pas travailler a la mine, elle n'est pas construite !");
     }
   }
 }
