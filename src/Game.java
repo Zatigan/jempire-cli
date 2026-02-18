@@ -166,7 +166,7 @@ public class Game {
       gold -= 30;
       villagers += 1;
       actionPossible = true;
-      System.out.println("Vous gagnez 1 habitant.");
+      System.out.println("Vous gagnez +1 habitant.");
     } else {
       System.out.println("Vous n'avez pas assez d'argent pour recruter un habitant.");
       System.out.println();
