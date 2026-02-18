@@ -86,7 +86,6 @@ public class Game {
           break;
         case 6:
           castle();
-          // prévoir break dans la method pour sortir de la boucle dès la construction du
           // château
           break;
         default:
