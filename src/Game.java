@@ -98,7 +98,19 @@ public class Game {
               .println(
                   "Les habitants prennent un repas bien mérité ! Vous avez perdu " + villagers + " de nourriture.");
           food -= villagers;
-        } else {
+        } else if (food < villagers) {
+          int leavingPeople = villagers - food;
+          villagers -= leavingPeople;
+          food -= villagers;
+          System.out
+              .println(
+                  "Vous ne pouvez pas nourrir tout le monde aujourd'hui ! Vous avez perdu " + leavingPeople + " habitants.");
+          if (food < 0) {
+            food = 0;
+          }
+        }
+
+        if (villagers < 1) {
           peopleFed = false;
           break;
         }
