@@ -50,7 +50,7 @@ It's little game played only in your Terminal. Your goal is to build a castle to
 First of all, to test the game on your computer, you need to install the Java Developper Kit (JDK). You can use the package offered by [Adoptium](https://adoptium.net/fr/temurin/releases?version=8&os=windows&arch=x64&package=jre) which is free to use.
 
 Once installed, you can clone the project on your computer.
-`https://github.com/Zatigan/jempire-cli.git`
+`git clone https://github.com/Zatigan/jempire-cli.git`
 
 Open the folder, do a right click inside the window "Open in Terminal".
 
