@@ -8,7 +8,7 @@ C'est un petit jeu qui se joue uniquement dans le Terminal de votre ordinateur. 
 Pour tester le jeu sur votre ordinateur, vous devez installer le Java Developper Kit (JDK). Vous pouvez utiliser le package proposé par [Adoptium](https://adoptium.net/fr/temurin/releases?version=8&os=windows&arch=x64&package=jre) qui est gratuit.
 
 Une fois installé, vous pouvez récupérer le projet en le clonant sur votre propre machine.
-`https://github.com/Zatigan/jempire-cli.git`
+ `git clone https://github.com/Zatigan/jempire-cli.git`
 
 Ouvrez le dossier, faites un clic-droit "Ouvrir dans le Terminal".
 
