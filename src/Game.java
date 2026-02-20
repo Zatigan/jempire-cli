@@ -94,7 +94,7 @@ public class Game {
       ressources.add("    - Or : " + gold);
       ressources.add("    - Nourriture : " + food);
       ressources.add("    - Villageois : " + villagers);
-
+      ressources.add("");
       cadre(ressources);
 
       List<String> actionDay = new ArrayList<>();
