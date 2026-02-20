@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Game {
@@ -13,6 +15,45 @@ public class Game {
   static boolean isActionPossible = false;
   static boolean isPeopleFed = true;
   static boolean isGameEnding = false;
+
+  public static void cadre(List<String> text) {
+
+    if (text.isEmpty()) {
+      return;
+    }
+    int maxLength = 0;
+    for (int i = 0; i < text.size(); i++) {
+      String textLength = text.get(i);
+      if (textLength.length() > maxLength) {
+        maxLength = textLength.length();
+      }
+    }
+    System.out.print("╔");
+
+    for (int i = 0; i < maxLength + 2; i++) {
+      System.out.print("═");
+    }
+    System.out.println("╗");
+
+    for (int i = 0; i < text.size(); i++) {
+      String arrayText = text.get(i);
+
+      System.out.print("║ ");
+      System.out.print(arrayText);
+
+      int comblerEspace = maxLength - arrayText.length();
+      for (int j = 0; j < comblerEspace; j++) {
+        System.out.print(" ");
+      }
+      System.out.println(" ║");
+    }
+    System.out.print("╚");
+
+    for (int i = 0; i < maxLength + 2; i++) {
+      System.out.print("═");
+    }
+    System.out.println("╝");
+  }
 
   public static int readInt(Scanner scanner) {
     return readInt(scanner, "Entrez un nombre :");
@@ -44,24 +85,31 @@ public class Game {
     Scanner scanner = new Scanner(System.in);
 
     do {
-      System.out.println();
-      System.out.println("\t Jour " + days);
-      System.out.println();
-      System.out.println("Une nouvelle journée commence. Voici les ressources à votre disposition :");
-      System.out.println("\t - Bois : " + wood);
-      System.out.println("\t - Pierre : " + stone);
-      System.out.println("\t - Or : " + gold);
-      System.out.println("\t - Nourriture : " + food);
-      System.out.println("\t - Villageois : " + villagers);
-      System.out.println();
-      System.out.println("Que voulez-vous faire aujourd'hui ?");
-      System.out.println("\t1 - Explorer la forêt (Coût : 0 | +5 bois ; +3 nourriture)");
-      System.out.println("\t2 - Créer une mine (Coût : 10 bois)");
-      System.out.println("\t3 - Travailler à la mine (Coût : 5 nourriture | +5 pierre ; +2 or)");
-      System.out.println("\t4 - Recruter un soldat (Coût : -30 or | +1 habitant)");
-      System.out.println("\t5 - Commercer (Coût : - 5 pierre | +10 or)");
-      System.out.println("\t6 - Construire LE château (Coût : -100 bois ; -100 pierre ; -200 or ; 40+ habitants)");
-      System.out.println();
+      List<String> ressources = new ArrayList<>();
+      ressources.add("                                Jour " + days);
+      ressources.add("");
+      ressources.add("Une nouvelle journée commence. Voici les ressources à votre disposition :");
+      ressources.add("    - Bois : " + wood);
+      ressources.add("    - Pierre : " + stone);
+      ressources.add("    - Or : " + gold);
+      ressources.add("    - Nourriture : " + food);
+      ressources.add("    - Villageois : " + villagers);
+
+      cadre(ressources);
+
+      List<String> actionDay = new ArrayList<>();
+      actionDay.add("");
+      actionDay.add("                      Que voulez-vous faire aujourd'hui ?");
+      actionDay.add("");
+      actionDay.add("    1 - Explorer la forêt (Coût : 0 / +5 bois ; +3 nourriture)");
+      actionDay.add("    2 - Créer une mine (Coût : 10 bois)");
+      actionDay.add("    3 - Travailler à la mine (Coût : 5 nourriture / +5 pierre ; +2 or)");
+      actionDay.add("    4 - Recruter un soldat (Coût : -30 or / +1 habitant)");
+      actionDay.add("    5 - Commercer (Coût : - 5 pierre / +10 or)");
+      actionDay.add("    6 - Construire LE château (Coût : -100 bois ; -100 pierre ; -200 or ; 40+ habitants)");
+      actionDay.add("");
+
+      cadre(actionDay);
 
       do {
         isActionPossible = false;
@@ -104,7 +152,8 @@ public class Game {
           food -= villagers;
           System.out
               .println(
-                  "Vous ne pouvez pas nourrir tout le monde aujourd'hui ! Vous avez perdu " + leavingPeople + " habitants.");
+                  "Vous ne pouvez pas nourrir tout le monde aujourd'hui ! Vous avez perdu " + leavingPeople
+                      + " habitants.");
           if (food < 0) {
             food = 0;
           }
