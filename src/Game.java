@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Game {
@@ -8,11 +10,50 @@ public class Game {
   static int food = 100;
   static int villagers = 1;
   static int days = 1;
-  static boolean mine = false;
-  static boolean castle = false;
+  static boolean hasMine = false;
+  static boolean hasCastle = false;
   static boolean isActionPossible = false;
-  static boolean peopleFed = true;
-  static boolean gameEnding = false;
+  static boolean isPeopleFed = true;
+  static boolean isGameEnding = false;
+
+  public static void cadre(List<String> text) {
+
+    if (text.isEmpty()) {
+      return;
+    }
+    int maxLength = 0;
+    for (int i = 0; i < text.size(); i++) {
+      String textLength = text.get(i);
+      if (textLength.length() > maxLength) {
+        maxLength = textLength.length();
+      }
+    }
+    System.out.print("╔");
+
+    for (int i = 0; i < maxLength + 2; i++) {
+      System.out.print("═");
+    }
+    System.out.println("╗");
+
+    for (int i = 0; i < text.size(); i++) {
+      String arrayText = text.get(i);
+
+      System.out.print("║ ");
+      System.out.print(arrayText);
+
+      int comblerEspace = maxLength - arrayText.length();
+      for (int j = 0; j < comblerEspace; j++) {
+        System.out.print(" ");
+      }
+      System.out.println(" ║");
+    }
+    System.out.print("╚");
+
+    for (int i = 0; i < maxLength + 2; i++) {
+      System.out.print("═");
+    }
+    System.out.println("╝");
+  }
 
   public static int readInt(Scanner scanner) {
     return readInt(scanner, "Entrez un nombre :");
@@ -44,34 +85,41 @@ public class Game {
     Scanner scanner = new Scanner(System.in);
 
     do {
-      System.out.println();
-      System.out.println("\t Jour " + days);
-      System.out.println();
-      System.out.println("Une nouvelle journée commence. Voici les ressources à votre disposition :");
-      System.out.println("\t - Bois : " + wood);
-      System.out.println("\t - Pierre : " + stone);
-      System.out.println("\t - Or : " + gold);
-      System.out.println("\t - Nourriture : " + food);
-      System.out.println("\t - Villageois : " + villagers);
-      System.out.println();
-      System.out.println("Que voulez-vous faire aujourd'hui ?");
-      System.out.println("\t1 - Explorer la forêt (Coût : 0 / +5 bois ; +3 nourriture)");
-      System.out.println("\t2 - Créer une mine (Coût : 10 bois)");
-      System.out.println("\t3 - Travailler à la mine (Coût : 5 nourriture / +5 pierre ; +2 or)");
-      System.out.println("\t4 - Recruter un soldat (Coût : -30 or / +1 habitant)");
-      System.out.println("\t5 - Commercer (Coût : - 5 pierre / +10 or)");
-      System.out.println("\t6 - Construire LE château (Coût : -100 bois ; -100 pierre ; -200 or ; 40+ habitants)");
-      System.out.println();
+      List<String> ressources = new ArrayList<>();
+      ressources.add("                                Jour " + days);
+      ressources.add("");
+      ressources.add("Une nouvelle journée commence. Voici les ressources à votre disposition :");
+      ressources.add("    - Bois : " + wood);
+      ressources.add("    - Pierre : " + stone);
+      ressources.add("    - Or : " + gold);
+      ressources.add("    - Nourriture : " + food);
+      ressources.add("    - Villageois : " + villagers);
+      ressources.add("");
+      cadre(ressources);
+
+      List<String> actionDay = new ArrayList<>();
+      actionDay.add("");
+      actionDay.add("                      Que voulez-vous faire aujourd'hui ?");
+      actionDay.add("");
+      actionDay.add("    1 - Explorer la forêt (Coût : 0 / +5 bois ; +3 nourriture)");
+      actionDay.add("    2 - Créer une mine (Coût : 10 bois)");
+      actionDay.add("    3 - Travailler à la mine (Coût : 5 nourriture / +5 pierre ; +2 or)");
+      actionDay.add("    4 - Recruter un soldat (Coût : -30 or / +1 habitant)");
+      actionDay.add("    5 - Commercer (Coût : - 5 pierre / +10 or)");
+      actionDay.add("    6 - Construire LE château (Coût : -100 bois ; -100 pierre ; -200 or ; 40+ habitants)");
+      actionDay.add("");
+
+      cadre(actionDay);
 
       do {
         isActionPossible = false;
         int choice = readInt(scanner, "Quel est votre choix pour cette journée : ");
         switch (choice) {
           case 1:
-            forest();
+            exploreForest();
             break;
           case 2:
-            shaft();
+            buildShaft();
             break;
           case 3:
             workAtShaft();
@@ -83,7 +131,7 @@ public class Game {
             trade();
             break;
           case 6:
-            castle();
+            buildCastle();
             break;
           default:
             System.out.println("Entrez un numéro valide s'il vous plaît.");
@@ -91,7 +139,7 @@ public class Game {
         }
       } while (!isActionPossible);
 
-      if (!gameEnding) {
+      if (!isGameEnding) {
         if (food > villagers) {
           System.out.println();
           System.out
@@ -104,14 +152,15 @@ public class Game {
           food -= villagers;
           System.out
               .println(
-                  "Vous ne pouvez pas nourrir tout le monde aujourd'hui ! Vous avez perdu " + leavingPeople + " habitants.");
+                  "Vous ne pouvez pas nourrir tout le monde aujourd'hui ! Vous avez perdu " + leavingPeople
+                      + " habitants.");
           if (food < 0) {
             food = 0;
           }
         }
 
         if (villagers < 1) {
-          peopleFed = false;
+          isPeopleFed = false;
           break;
         }
 
@@ -125,21 +174,21 @@ public class Game {
         scanner.nextLine();
       }
 
-    } while (!gameEnding);
+    } while (!isGameEnding);
 
-    if (!peopleFed) {
+    if (!isPeopleFed) {
       System.out.println();
       System.out
           .println("Vous avez perdu ! Il ne vous restait pas assez de nourriture, les villageois sont morts de faim !");
       System.out.println();
-    } else if (castle) {
+    } else if (hasCastle) {
       System.out.println();
       System.out.println("Vous avez gagné la partie !");
       System.out.println();
     }
   }
 
-  public static void forest() {
+  public static void exploreForest() {
     wood += (5 * villagers);
     food += (3 * villagers);
     isActionPossible = true;
@@ -147,10 +196,10 @@ public class Game {
     System.out.println("Vous gagnez " + (5 * villagers) + " bois et " + (3 * villagers) + " nourriture !");
   }
 
-  public static void shaft() {
-    if (mine == false && wood >= 10) {
+  public static void buildShaft() {
+    if (hasMine == false && wood >= 10) {
       wood -= 10;
-      mine = true;
+      hasMine = true;
       isActionPossible = true;
       System.out.println("Vous utilisez 10 bois et vous construisez la mine");
     } else {
@@ -160,7 +209,7 @@ public class Game {
   }
 
   public static void workAtShaft() {
-    if (mine == true) {
+    if (hasMine == true) {
       food -= (5 * villagers);
       stone += (5 * villagers);
       gold += (2 * villagers);
@@ -197,13 +246,13 @@ public class Game {
     }
   }
 
-  public static void castle() {
+  public static void buildCastle() {
     if (wood >= 100 && stone >= 100 && gold >= 200 && villagers >= 40) {
       wood -= 100;
       stone -= 100;
       gold -= 200;
-      castle = true;
-      gameEnding = true;
+      hasCastle = true;
+      isGameEnding = true;
       isActionPossible = true;
       System.out.println("Vous avez construit LE château !");
     } else {
