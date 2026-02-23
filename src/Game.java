@@ -183,5 +183,6 @@ public class Game {
       System.out.println("Vous avez gagné la partie !");
       System.out.println();
     }
+    scanner.close();
   }
 }
