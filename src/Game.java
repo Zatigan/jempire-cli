@@ -4,12 +4,6 @@ import java.util.Scanner;
 
 public class Game {
 
-  static int wood = 0;
-  static int stone = 0;
-  static int gold = 50;
-  static int food = 100;
-  static int villagers = 1;
-  static int days = 1;
   static boolean hasMine = false;
   static boolean hasCastle = false;
   static boolean isActionPossible = false;
@@ -21,7 +15,9 @@ public class Game {
     if (text.isEmpty()) {
       return;
     }
+
     int maxLength = 0;
+
     for (int i = 0; i < text.size(); i++) {
       String textLength = text.get(i);
       if (textLength.length() > maxLength) {
@@ -86,14 +82,14 @@ public class Game {
 
     do {
       List<String> ressources = new ArrayList<>();
-      ressources.add("                                Jour " + days);
+      ressources.add("                                Jour " + Resources.getDays());
       ressources.add("");
       ressources.add("Une nouvelle journée commence. Voici les ressources à votre disposition :");
-      ressources.add("    - Bois : " + wood);
-      ressources.add("    - Pierre : " + stone);
-      ressources.add("    - Or : " + gold);
-      ressources.add("    - Nourriture : " + food);
-      ressources.add("    - Villageois : " + villagers);
+      ressources.add("    - Bois : " + Resources.getWood());
+      ressources.add("    - Pierre : " + Resources.getStone());
+      ressources.add("    - Or : " + Resources.getGold());
+      ressources.add("    - Nourriture : " + Resources.getFood());
+      ressources.add("    - Villageois : " + Resources.getVillagers());
       ressources.add("");
       cadre(ressources);
 
@@ -116,22 +112,22 @@ public class Game {
         int choice = readInt(scanner, "Quel est votre choix pour cette journée : ");
         switch (choice) {
           case 1:
-            exploreForest();
+            Resources.exploreForest(isActionPossible);
             break;
           case 2:
-            buildShaft();
+            Resources.buildShaft(hasMine, isActionPossible);
             break;
           case 3:
-            workAtShaft();
+            Resources.workAtShaft(hasMine, isActionPossible);
             break;
           case 4:
-            recruiting();
+            Resources.recruiting(isActionPossible);
             break;
           case 5:
-            trade();
+            Resources.trade(isActionPossible);
             break;
           case 6:
-            buildCastle();
+            Resources.buildCastle(hasCastle, isGameEnding, isActionPossible);
             break;
           default:
             System.out.println("Entrez un numéro valide s'il vous plaît.");
@@ -140,37 +136,38 @@ public class Game {
       } while (!isActionPossible);
 
       if (!isGameEnding) {
-        if (food > villagers) {
+        if (Resources.getFood() > Resources.getVillagers()) {
           System.out.println();
           System.out
               .println(
-                  "Les habitants prennent un repas bien mérité ! Vous avez perdu " + villagers + " de nourriture.");
-          food -= villagers;
-        } else if (food < villagers) {
-          int leavingPeople = villagers - food;
-          villagers -= leavingPeople;
-          food -= villagers;
+                  "Les habitants prennent un repas bien mérité ! Vous avez perdu " + Resources.getVillagers()
+                      + " de nourriture.");
+          Resources.updateFood(Resources.getVillagers());
+        } else if (Resources.getFood() < Resources.getVillagers()) {
+          int leavingPeople = Resources.getVillagers() - Resources.getFood();
+          Resources.updateVillagers(leavingPeople);
+          Resources.updateFood(Resources.getVillagers());
           System.out
               .println(
                   "Vous ne pouvez pas nourrir tout le monde aujourd'hui ! Vous avez perdu " + leavingPeople
                       + " habitants.");
-          if (food < 0) {
-            food = 0;
+          if (Resources.getFood() < 0) {
+            Resources.setFood(0);
           }
         }
 
-        if (villagers < 1) {
+        if (Resources.getVillagers() < 1) {
           isPeopleFed = false;
           break;
         }
 
         System.out.println();
-        System.out.println("Fin de la journée " + days + ", tout le monde file se coucher !");
+        System.out.println("Fin de la journée " + Resources.getDays() + ", tout le monde file se coucher !");
         System.out.println();
 
-        days++;
+        Resources.incrementDays();
 
-        System.out.print("Appuyez sur la touche entrée pour passer au jour " + days);
+        System.out.print("Appuyez sur la touche entrée pour passer au jour " + Resources.getDays());
         scanner.nextLine();
       }
 
@@ -184,79 +181,6 @@ public class Game {
     } else if (hasCastle) {
       System.out.println();
       System.out.println("Vous avez gagné la partie !");
-      System.out.println();
-    }
-  }
-
-  public static void exploreForest() {
-    wood += (5 * villagers);
-    food += (3 * villagers);
-    isActionPossible = true;
-    System.out.println();
-    System.out.println("Vous gagnez " + (5 * villagers) + " bois et " + (3 * villagers) + " nourriture !");
-  }
-
-  public static void buildShaft() {
-    if (hasMine == false && wood >= 10) {
-      wood -= 10;
-      hasMine = true;
-      isActionPossible = true;
-      System.out.println("Vous utilisez 10 bois et vous construisez la mine");
-    } else {
-      System.out.println("Construction impossible");
-      System.out.println();
-    }
-  }
-
-  public static void workAtShaft() {
-    if (hasMine == true) {
-      food -= (5 * villagers);
-      stone += (5 * villagers);
-      gold += (2 * villagers);
-      isActionPossible = true;
-      System.out.println("Vous avez utilisé " + (5 * villagers) + " de nourriture et vous gagnez " + (5 * villagers)
-          + " pierre et " + (2 * villagers) + " or.");
-    } else {
-      System.out.println("Vous ne pouvez pas travailler a la mine, elle n'est pas construite !");
-      System.out.println();
-    }
-  }
-
-  public static void recruiting() {
-    if (gold >= 30) {
-      gold -= 30;
-      villagers += 1;
-      isActionPossible = true;
-      System.out.println("Vous gagnez +1 habitant.");
-    } else {
-      System.out.println("Vous n'avez pas assez d'argent pour recruter un habitant.");
-      System.out.println();
-    }
-  }
-
-  public static void trade() {
-    if (stone < 5) {
-      System.out.println("Vous devez avoir 5 pierre pour commercer !");
-      System.out.println();
-    } else {
-      gold += 10;
-      stone -= 5;
-      isActionPossible = true;
-      System.out.println("Vous gagnez +10 or !");
-    }
-  }
-
-  public static void buildCastle() {
-    if (wood >= 100 && stone >= 100 && gold >= 200 && villagers >= 40) {
-      wood -= 100;
-      stone -= 100;
-      gold -= 200;
-      hasCastle = true;
-      isGameEnding = true;
-      isActionPossible = true;
-      System.out.println("Vous avez construit LE château !");
-    } else {
-      System.out.println("Vous n'avez pas les ressources nécessaires pour construire ce bâtiment !");
       System.out.println();
     }
   }
